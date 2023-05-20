@@ -38,5 +38,28 @@ function init() {
         })
 }
 
-function generateSvg(data)
+function generateSvg(data) {
+    const { text, textColor } = data
+    let shape;
+    switch (shapeType) {
+        case "circle":
+            shape = new Circle();
+            break;
+
+        case "square":
+            shape = new Square();
+            break;
+
+        default:
+            shape = new Triangle();
+            break;
+    }
+
+    shape.setColor(shapeColor);
+
+    const svg = new SVG();
+    svg.setText(text, textColor);
+    svg.setShape(shape);
+    return writeFile("logo.svg", svg.render());
+}
 init();
