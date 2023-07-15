@@ -1,6 +1,7 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
-const shapes = require('./lib/shapes')
+const {Shapes, Triangle, Square, Circle} = require('./lib/shapes')
+
 
 const questions = [
     {
@@ -41,7 +42,7 @@ function init() {
 function generateSvg(data) {
     const { text, textColor } = data
     let shape;
-    switch (shapeType) {
+    switch (Shapes) {
         case "circle":
             shape = new Circle();
             break;
@@ -55,7 +56,7 @@ function generateSvg(data) {
             break;
     }
 
-    shape.setColor(shapeColor);
+    shape.setColor(data.shapeColor);
 
     const svg = new SVG();
     svg.setText(text, textColor);
