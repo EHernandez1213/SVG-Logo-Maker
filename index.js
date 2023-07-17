@@ -1,7 +1,7 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
 const {Shapes, Triangle, Square, Circle} = require('./lib/shapes')
-
+const SVG = require('./lib/svg.js')
 
 const questions = [
     {
@@ -35,14 +35,16 @@ function init() {
     inquirer
         .prompt(questions)
         .then((answers) => {
-            writeToFile('logo.svg', generateSvg(answers));
+            console.log(answers)
+            // writeToFile('logo.svg', generateSvg(answers));
+            generateSvg(answers)
         })
 }
 
 function generateSvg(data) {
     const { text, textColor } = data
     let shape;
-    switch (Shapes) {
+    switch (data.shape) {
         case "circle":
             shape = new Circle();
             break;
@@ -58,9 +60,10 @@ function generateSvg(data) {
 
     shape.setColor(data.shapeColor);
 
-    const svg = new SVG();
-    svg.setText(text, textColor);
-    svg.setShape(shape);
-    return writeFile("logo.svg", svg.render());
+    const newSvg = new SVG();
+    newSvg.setText(text, textColor);
+    newSvg.setShape(shape);
+    console.log(newSvg.render())
+    return writeToFile("logo.svg", newSvg.render());
 }
 init();
